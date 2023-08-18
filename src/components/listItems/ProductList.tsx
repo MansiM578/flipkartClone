@@ -13,8 +13,8 @@ import {
   Grid,
   styled,
   CircularProgress,
-  Link,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { useAppDispatch } from "reducers/Store";
 import { useNavigate } from "react-router-dom";
 
@@ -100,19 +100,24 @@ const ProductList: React.FC = () => {
         >
           {items?.map((item) => (
             <Grid item xs={2} sm={2} md={2} key={item.id}>
-              <Model textAlign="center" style={{ padding: "25px 15px" }}>
-                <Image src={item.images[0]} alt="phone1" />
-                <Link>{item.name}</Link>
-                {/* <Link
+              <Link
+                to={`product/${item.id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <Model textAlign="center" style={{ padding: "25px 15px" }}>
+                  <Image src={item.images[0]} alt="phone1" />
+                  <Text>{item.name}</Text>
+                  {/* <Link
                   onClick={() => {
                     handleClick(item.id);
                   }}
                 >
                   {item.name}
                 </Link> */}
-                {/* <Text>{item.ratingReview.rating}</Text> */}
-                <Text>{item.price}</Text>
-              </Model>
+                  {/* <Text>{item.ratingReview.rating}</Text> */}
+                  <Text>{item.price}</Text>
+                </Model>
+              </Link>
             </Grid>
           ))}
         </Grid>
