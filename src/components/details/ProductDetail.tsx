@@ -46,7 +46,7 @@ const ProductDetail = ({ item }: any) => {
     <>
       <Typography style={{ fontSize: 20 }}>{item?.name ?? "-"}</Typography>
       <Typography style={{ marginTop: 5, color: "#878787", fontSize: 14 }}>
-        {item?.ratingReviews.rating} Rating & {item?.ratingReviews.reviews}{" "}
+        {item?.ratingReviews?.rating} Rating & {item?.ratingReviews?.reviews}{" "}
         Reviews
         <Box component="span">
           <img src={fassured} alt="" style={{ width: 77, marginLeft: 20 }} />
@@ -87,7 +87,7 @@ const ProductDetail = ({ item }: any) => {
           <StyledBadge /> 5% Cashback on Flipkart Axis Bank Card
         </Typography>
         <Typography>
-          <StyledBadge /> {item?.offers[0].description}
+          <StyledBadge /> {item?.offers?.[0]?.description}
         </Typography>
       </SmallText>
 
@@ -107,7 +107,7 @@ const ProductDetail = ({ item }: any) => {
             <TableCell style={{ color: "#878787" }}>Seller</TableCell>
             <TableCell>
               <Box component="span" style={{ color: "#2874f0" }}>
-                {item?.seller[0].name}
+                {item?.seller?.[0]?.name}
               </Box>
               &nbsp;&nbsp;&nbsp;
               <Box
@@ -124,7 +124,7 @@ const ProductDetail = ({ item }: any) => {
               </Box>
               <Typography></Typography>
               <Typography></Typography>
-              <Typography>{item?.seller[0].returns}</Typography>
+              <Typography>{item?.seller?.[0]?.returns}</Typography>
               <Typography>GST invoice available</Typography>
               <Typography>View more sellers starting from ₹100</Typography>
             </TableCell>

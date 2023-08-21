@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import {
   selectLoading,
   selectError,
-  selectItems,
   selectItemDetails,
 } from "reducers/ProductSlice";
 import { useAppDispatch } from "reducers/Store";
@@ -12,7 +11,6 @@ import { useParams } from "react-router-dom";
 import { getProductDetails } from "reducers/ProductSlice";
 import ActionItem from "components/details/actionItem";
 import ProductDetail from "components/details/ProductDetail";
-import { FormatStrikethrough, StrikethroughS } from "@mui/icons-material";
 
 const Component = styled(Box)`
   margin-top: 55px;
@@ -73,12 +71,6 @@ const ProductDisplay: React.FC = () => {
           <ProductDetail item={item} />
         </RightContianer>
       </Container>
-      {/* <Text>{item.name}</Text>
-      <Text>{item.price}</Text>
-      <Image
-        src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
-        alt="phone1"
-      /> */}
     </Component>
   );
 };

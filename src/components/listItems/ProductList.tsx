@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   fetchItems,
   selectItems,
@@ -16,12 +16,10 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "reducers/Store";
-import { useNavigate } from "react-router-dom";
 
 const ComponentBox = styled(Box)`
   display: flex;
   justify-content: space-between;
-  /* background-color: #f1f1f1; */
 `;
 
 const Component = styled(Box)`
@@ -57,11 +55,6 @@ const Model = styled(Box)`
 `;
 
 const ProductList: React.FC = () => {
-  // const navigate = useNavigate();
-
-  // const handleClick = (id: number) => {
-  //   navigate(`products/ProductDisplay/${id}`);
-  // };
   const dispatch = useAppDispatch();
   const items = useSelector(selectItems);
   const loading = useSelector(selectLoading);
@@ -79,14 +72,6 @@ const ProductList: React.FC = () => {
     return <Typography color="error">{error}</Typography>;
   }
   return (
-    // <Box>
-    //   {items.map((item) => (
-    //     <div key={item.id}>
-    //       {item.name}
-    //       <div>{item.images[0]}</div>
-    //     </div>
-    //   ))}
-    // </Box>
     <Component>
       <Phone>
         <PhoneText>Product List</PhoneText>
@@ -107,14 +92,6 @@ const ProductList: React.FC = () => {
                 <Model textAlign="center" style={{ padding: "25px 15px" }}>
                   <Image src={item.images[0]} alt="phone1" />
                   <Text>{item.name}</Text>
-                  {/* <Link
-                  onClick={() => {
-                    handleClick(item.id);
-                  }}
-                >
-                  {item.name}
-                </Link> */}
-                  {/* <Text>{item.ratingReview.rating}</Text> */}
                   <Text>{item.price}</Text>
                 </Model>
               </Link>

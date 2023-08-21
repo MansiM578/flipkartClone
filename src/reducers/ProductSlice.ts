@@ -1,15 +1,8 @@
-import {
-  createSlice,
-  PayloadAction,
-  createAsyncThunk,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "reducers/Store";
-import thunkMiddleware from "redux-thunk";
 import axios from "axios";
-import { ThunkDispatch } from "redux-thunk";
 
-interface Item {
+export interface Item {
   id: string;
   assured: boolean;
   breadcrumbs: string[];
@@ -27,47 +20,48 @@ interface Item {
   specialPrice: boolean;
   specifications: Specification;
   stock: number;
+  // cart: CartItem[];
 }
 
-interface Offer {
+export interface Offer {
   offerType: string;
   description: string;
 }
 
-interface RatingReviews {
+export interface RatingReviews {
   avg_rating: number;
   rating: number;
   reviews: number;
 }
 
-interface Seller {
+export interface Seller {
   name: string;
   returns: boolean;
   rating: number;
 }
 
-interface Services {
+export interface Services {
   paymentType: string;
   warranty: string;
 }
 
-interface Specification {
+export interface Specification {
   attributes: SpecificationAttribute[];
 }
 
-interface SpecificationAttribute {
+export interface SpecificationAttribute {
   inTheBox: InTheBox;
   general: General;
   dimensions: Dimension;
   moreDetails: MoreDetails;
 }
 
-interface InTheBox {
+export interface InTheBox {
   salesPackage: string;
   packOf: string;
 }
 
-interface General {
+export interface General {
   brand: string;
   suitableFor: string;
   appliedOn: string;
@@ -75,21 +69,29 @@ interface General {
   color: string;
 }
 
-interface Dimension {
+export interface Dimension {
   height: string;
   width: string;
 }
 
-interface MoreDetails {
+export interface MoreDetails {
   GenericName: string;
   CountryOfOrigin: string;
 }
 
-interface ItemsState {
+export interface CartItem {
+  itemId: string;
+  name: string;
+  quantity: number;
+  image: string;
+}
+
+export interface ItemsState {
   items: Item[] | null;
   loading: boolean;
   error: string | null;
   itemDetails: Item | null;
+  cart: CartItem[] | null;
   // sellers: Seller[] | null;
 }
 
@@ -98,6 +100,7 @@ const initialState: ItemsState = {
   loading: false,
   error: null,
   itemDetails: null,
+  cart: [],
   // sellers: [],
 };
 
@@ -112,6 +115,15 @@ export const fetchItems = createAsyncThunk<Item[]>(
 );
 
 export const getProductDetails = createAsyncThunk<Item, string>(
+  "api/getProductDetails",
+  async (id) => {
+    const response = await axios.get<Item>(
+      `https://61e55f2e595afe00176e553b.mockapi.io/products/${id}`
+    );
+    return response.data;
+  }
+);
+export const addToCartItems = createAsyncThunk<Item, string>(
   "api/getProductDetails",
   async (id) => {
     const response = await axios.get<Item>(
@@ -145,15 +157,27 @@ const itemsSlice = createSlice({
     [getProductDetails.fulfilled.type]: (state, action) => {
       state.loading = false;
       state.itemDetails = action.payload;
-      // state.sellers = action.payload;
       state.error = null;
     },
     [getProductDetails.rejected.type]: (state, action) => {
       state.loading = false;
       state.itemDetails = null;
-      // state.sellers = null;
       state.error = action.error.message || "An error occurred.";
     },
+
+    // [addToCartItems.pending.type]: (state) => {
+    //   state.loading = true;
+    // },
+    // [addToCartItems.fulfilled.type]: (state, action) => {
+    //   state.loading = false;
+    //   state.cart = action.payload;
+    //   state.error = null;
+    // },
+    // [addToCartItems.rejected.type]: (state, action) => {
+    //   state.loading = false;
+    //   state.cart = null;
+    //   state.error = action.error.message || "An error occurred.";
+    // },
   },
 });
 
@@ -163,4 +187,4 @@ export const selectItemDetails = (state: RootState) => state.items.itemDetails;
 export const selectItems = (state: RootState) => state.items.items;
 export const selectLoading = (state: RootState) => state.items.loading;
 export const selectError = (state: RootState) => state.items.error;
-// export const selectSellers = (state: RootState) => state.sellers[].selectSellers;
+export const selectItemsAdded = (state: RootState) => state.items.cart;

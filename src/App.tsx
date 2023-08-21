@@ -4,6 +4,7 @@ import ProductList from "components/listItems/ProductList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
 import ProductDisplay from "pages/ProductDisplay";
+import Cart from "pages/ShowPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ProductList />} />
           <Route path="/product/:id" element={<ProductDisplay />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Box>
     </BrowserRouter>

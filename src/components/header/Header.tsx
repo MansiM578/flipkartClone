@@ -1,16 +1,8 @@
 import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Box,
-  Typography,
-  IconButton,
-  styled,
-} from "@mui/material";
+import { AppBar, Toolbar, Box, Typography, styled } from "@mui/material";
 import Search from "./Search";
 import CustomButtons from "./CustomButtons";
 import { Link } from "react-router-dom";
-import { Menu } from "@mui/icons-material";
 
 const StyledHeader = styled(AppBar)`
   background-color: #2874f0;
@@ -50,9 +42,6 @@ export default function Header() {
   return (
     <StyledHeader>
       <Toolbar style={{ minHeight: 55 }}>
-        {/* <IconButton>
-          <Menu />
-        </IconButton> */}
         <Component to="/">
           <img src={logoURL} alt="logo" style={{ width: 75 }} />
           <Box style={{ display: "flex" }}>
