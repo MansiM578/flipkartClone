@@ -44,8 +44,8 @@ const ProductDetail = ({ item }: any) => {
 
   return (
     <>
-      <Typography style={{ fontSize: 20 }}>{item?.name ?? "-"}</Typography>
-      <Typography style={{ marginTop: 5, color: "#878787", fontSize: 14 }}>
+      <Typography sx={{ fontSize: 20 }}>{item?.name ?? "-"}</Typography>
+      <Typography sx={{ marginTop: 5, color: "#878787", fontSize: 14 }}>
         {item?.ratingReviews?.rating} Rating & {item?.ratingReviews?.reviews}{" "}
         Reviews
         <Box component="span">
@@ -53,18 +53,18 @@ const ProductDetail = ({ item }: any) => {
         </Box>
       </Typography>
       <Typography>
-        <Box component="span" style={{ fontSize: 28 }}>
+        <Box component="span" sx={{ fontSize: 28 }}>
           ₹{item?.price}
         </Box>
         &nbsp;&nbsp;&nbsp;
         <Box
           component="span"
-          style={{ color: "#878787", textDecoration: "line-through" }}
+          sx={{ color: "#878787", textDecoration: "line-through" }}
         >
           ₹{mrp}
         </Box>
         &nbsp;&nbsp;&nbsp;
-        <Box component="span" style={{ color: "#388E3C" }}>
+        <Box component="span" sx={{ color: "#388E3C" }}>
           ₹{item?.discount} off
         </Box>
       </Typography>
@@ -94,25 +94,25 @@ const ProductDetail = ({ item }: any) => {
       <Table>
         <TableBody>
           <ColumnText>
-            <TableCell style={{ color: "#878787" }}>Delivery</TableCell>
-            <TableCell style={{ fontWeight: 600 }}>
+            <TableCell sx={{ color: "#878787" }}>Delivery</TableCell>
+            <TableCell sx={{ fontWeight: 600 }}>
               Delivery by {date.toDateString()} | ₹40
             </TableCell>
           </ColumnText>
           <ColumnText>
-            <TableCell style={{ color: "#878787" }}>Warranty</TableCell>
+            <TableCell sx={{ color: "#878787" }}>Warranty</TableCell>
             <TableCell>No Warranty</TableCell>
           </ColumnText>
           <ColumnText>
-            <TableCell style={{ color: "#878787" }}>Seller</TableCell>
+            <TableCell sx={{ color: "#878787" }}>Seller</TableCell>
             <TableCell>
-              <Box component="span" style={{ color: "#2874f0" }}>
+              <Box component="span" sx={{ color: "#2874f0" }}>
                 {item?.seller?.[0]?.name}
               </Box>
               &nbsp;&nbsp;&nbsp;
               <Box
                 component="span"
-                style={{
+                sx={{
                   color: "#FFFFFF",
                   border: "4px solid #2874f0",
                   borderRadius: "10px",
@@ -135,7 +135,7 @@ const ProductDetail = ({ item }: any) => {
             </TableCell>
           </ColumnText>
           <ColumnText>
-            <TableCell style={{ color: "#878787" }}>Description</TableCell>
+            <TableCell sx={{ color: "#878787" }}>Description</TableCell>
             <TableCell>{item?.description}</TableCell>
           </ColumnText>
         </TableBody>

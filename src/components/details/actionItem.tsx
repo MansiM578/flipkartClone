@@ -37,6 +37,8 @@ type ActionItemProps = {
 const ActionItem: React.FC<ActionItemProps> = ({ item }: any) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const mrp: number = item?.price + item?.discount;
+  console.log(mrp);
 
   const handleAddToCart = () => {
     dispatch(
@@ -46,6 +48,9 @@ const ActionItem: React.FC<ActionItemProps> = ({ item }: any) => {
         image: item.images[0],
         quantity: 1,
         price: item.price,
+        discount: item.discount,
+        sellerName: item.seller[0].name,
+        maxPrice: item.price + item.discount,
       })
     );
     navigate("/cart");
@@ -54,7 +59,7 @@ const ActionItem: React.FC<ActionItemProps> = ({ item }: any) => {
   return (
     <LeftContainer>
       <Box
-        sx={{
+        style={{
           padding: "15px20px",
           border: "1px solid #f0f0f0",
           width: "90%",
@@ -65,7 +70,7 @@ const ActionItem: React.FC<ActionItemProps> = ({ item }: any) => {
 
       <StyledButton
         variant="contained"
-        style={{ marginRight: 10, background: "#ff9f00" }}
+        sx={{ marginRight: "10px", background: "#ff9f00" }}
         onClick={handleAddToCart}
       >
         <Cart />

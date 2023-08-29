@@ -123,15 +123,6 @@ export const getProductDetails = createAsyncThunk<Item, string>(
     return response.data;
   }
 );
-export const addToCartItems = createAsyncThunk<Item, string>(
-  "api/getProductDetails",
-  async (id) => {
-    const response = await axios.get<Item>(
-      `https://61e55f2e595afe00176e553b.mockapi.io/products/${id}`
-    );
-    return response.data;
-  }
-);
 
 const itemsSlice = createSlice({
   name: "items",
@@ -164,20 +155,6 @@ const itemsSlice = createSlice({
       state.itemDetails = null;
       state.error = action.error.message || "An error occurred.";
     },
-
-    // [addToCartItems.pending.type]: (state) => {
-    //   state.loading = true;
-    // },
-    // [addToCartItems.fulfilled.type]: (state, action) => {
-    //   state.loading = false;
-    //   state.cart = action.payload;
-    //   state.error = null;
-    // },
-    // [addToCartItems.rejected.type]: (state, action) => {
-    //   state.loading = false;
-    //   state.cart = null;
-    //   state.error = action.error.message || "An error occurred.";
-    // },
   },
 });
 
