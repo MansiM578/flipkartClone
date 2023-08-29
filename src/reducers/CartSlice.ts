@@ -6,15 +6,33 @@ export interface CartItem {
   image: string;
   quantity: number;
   price: number;
+  discount: number;
+  maxPrice: number;
+  sellerName: string;
+}
+export interface OrderItem {
+  id: string;
+  name: string;
+  image: string;
+  quantity: number;
+  price: number;
+  discount: number;
+  maxPrice: number;
+  sellerName: string;
 }
 
 interface CartState {
   items: CartItem[];
+  orderItems: OrderItem[];
+  loading: boolean;
+  success: boolean;
 }
 
 const loadCartFromLocalStorage = () => {
   const storedCart = localStorage.getItem("cart");
-  return storedCart ? JSON.parse(storedCart) : { items: [] };
+  return storedCart
+    ? JSON.parse(storedCart)
+    : { items: [], loading: false, success: false, orderItems: [] };
 };
 
 const initialState: CartState = loadCartFromLocalStorage();
@@ -59,6 +77,30 @@ const cartSlice = createSlice({
 
       localStorage.setItem("cart", JSON.stringify(state));
     },
+
+    fetchDataStart: (state) => {
+      state.loading = true;
+      state.success = false;
+      localStorage.setItem("cart", JSON.stringify(state));
+    },
+    fetchDataSuccess: (state) => {
+      state.loading = false;
+      state.success = true;
+      // state.orderItems = action.payload;
+      localStorage.setItem("ordercart", JSON.stringify(state));
+    },
+    fetchDataClear: (state) => {
+      state.loading = false;
+      state.success = true;
+      state.items = [];
+
+      localStorage.setItem("cart", JSON.stringify(state));
+    },
+    fetchDataFailure: (state) => {
+      state.loading = false;
+      state.success = false;
+      localStorage.setItem("cart", JSON.stringify(state));
+    },
   },
 });
 
@@ -67,5 +109,10 @@ export const {
   deleteFromCart,
   increaseQuantity,
   decreaseQuantity,
+  fetchDataStart,
+  fetchDataSuccess,
+  fetchDataFailure,
+  fetchDataClear,
 } = cartSlice.actions;
+
 export default cartSlice.reducer;

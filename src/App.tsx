@@ -6,6 +6,8 @@ import { Box } from "@mui/material";
 import ProductDisplay from "pages/ProductDisplay";
 import Cart from "pages/ShowPage";
 
+import OrderSummary from "pages/OrderSummary";
+
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +17,7 @@ function App() {
           <Route path="/" element={<ProductList />} />
           <Route path="/product/:id" element={<ProductDisplay />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<OrderSummary />} />
         </Routes>
       </Box>
     </BrowserRouter>

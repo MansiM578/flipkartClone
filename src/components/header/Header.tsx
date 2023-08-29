@@ -1,8 +1,11 @@
 import React from "react";
-import { AppBar, Toolbar, Box, Typography, styled } from "@mui/material";
+import { AppBar, Toolbar, Box, Typography, Badge, styled } from "@mui/material";
 import Search from "./Search";
 import CustomButtons from "./CustomButtons";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "reducers/Store";
+import { CartItem } from "reducers/CartSlice";
 
 const StyledHeader = styled(AppBar)`
   background-color: #2874f0;
@@ -39,6 +42,8 @@ export default function Header() {
     "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png";
   const subURL =
     "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/plus_aef861.png";
+
+  const cartItems = useSelector((state: RootState) => state.cart.items);
   return (
     <StyledHeader>
       <Toolbar style={{ minHeight: 55 }}>
@@ -56,7 +61,7 @@ export default function Header() {
         </Component>
         <Search />
         <CustomButtonWrapper>
-          <CustomButtons />
+          <CustomButtons cartItems={cartItems} />
         </CustomButtonWrapper>
       </Toolbar>
     </StyledHeader>
