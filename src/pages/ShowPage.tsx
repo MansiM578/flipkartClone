@@ -1,30 +1,18 @@
-/* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "reducers/Store";
-import {
-  CartItem,
-  decreaseQuantity,
-  deleteFromCart,
-  fetchDataClear,
-  fetchDataStart,
-  fetchDataSuccess,
-  increaseQuantity,
-} from "reducers/CartSlice";
-import { Box, Button, Grid, Typography, styled } from "@mui/material";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
+import { CartItem } from "types/types";
+import { Box, Button, Grid, styled } from "@mui/material";
+// import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CartItems from "components/cart/CartItem";
 import TotalView from "components/cart/TotalView";
 import EmptyCart from "components/cart/EmptyCart";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import axios from "axios";
 
-const Image = styled("img")({
-  padding: "15px",
-});
+// const Image = styled("img")({
+//   padding: "15px",
+// });
 
 const Container = styled(Grid)(({ theme }) => ({
   padding: "30px 135px",
@@ -80,32 +68,26 @@ const Cart: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   console.log(cartItems);
 
-  const dispatch = useDispatch();
-
-  const submitting = useSelector((state: RootState) => state.cart.loading);
-
-  const handleSubmit = () => {
-    dispatch(fetchDataStart());
-
-    // Simulate an API call here
-    setTimeout(() => {
-      dispatch(fetchDataSuccess());
-      toast.success("Cart submitted successfully!");
-      dispatch(fetchDataClear()); // Clear the cart after successful submission
-    }, 1500);
-  };
-
-  const handleDeleteFromCart = (itemId: string) => {
-    dispatch(deleteFromCart(itemId));
-  };
-
-  const handleIncreaseQuantity = (itemId: string) => {
-    dispatch(increaseQuantity(itemId));
-  };
-
-  const handleDecreaseQuantity = (itemId: string) => {
-    dispatch(decreaseQuantity(itemId));
-  };
+  // const dispatch = useDispatch();
+  // const submitting = useSelector((state: RootState) => state.cart.loading);
+  // const handleSubmit = () => {
+  //   dispatch(fetchDataStart());
+  //   // Simulate an API call here
+  //   setTimeout(() => {
+  //     dispatch(fetchDataSuccess());
+  //     toast.success("Cart submitted successfully!");
+  //     dispatch(fetchDataClear()); // Clear the cart after successful submission
+  //   }, 1500);
+  // };
+  // const handleDeleteFromCart = (itemId: string) => {
+  //   dispatch(deleteFromCart(itemId));
+  // };
+  // const handleIncreaseQuantity = (itemId: string) => {
+  //   dispatch(increaseQuantity(itemId));
+  // };
+  // const handleDecreaseQuantity = (itemId: string) => {
+  //   dispatch(decreaseQuantity(itemId));
+  // };
 
   const [showData, setShowData] = useState(false);
 
@@ -158,7 +140,9 @@ const Cart: React.FC = () => {
               <Button variant="contained" onClick={handleButtonClick}>
                 Get Location
               </Button>
-              {showData && <AddressBar>{address}</AddressBar>}
+              {showData && latitude && longitude && (
+                <AddressBar>{address}</AddressBar>
+              )}
             </Header2>
             {cartItems.map((item: CartItem) => (
               <CartItems key={item.id} cart={item} />

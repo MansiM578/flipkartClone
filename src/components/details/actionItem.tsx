@@ -3,8 +3,8 @@ import React from "react";
 import { ShoppingCart as Cart, FlashOn as Flash } from "@mui/icons-material";
 import { addItemToCart } from "reducers/CartSlice";
 import { useDispatch } from "react-redux";
-import { Item } from "reducers/ProductSlice";
 import { useNavigate } from "react-router-dom";
+import { ActionItemProps } from "types/types";
 
 const LeftContainer = styled(Box)(({ theme }) => ({
   minWidth: "40%",
@@ -30,27 +30,23 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-type ActionItemProps = {
-  item: Item | null;
-};
-
-const ActionItem: React.FC<ActionItemProps> = ({ item }: any) => {
+const ActionItem: React.FC<ActionItemProps> = ({ item }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const mrp: number = item?.price + item?.discount;
+  const mrp: number = (item?.price || 0) + (item?.discount || 0);
   console.log(mrp);
 
   const handleAddToCart = () => {
     dispatch(
       addItemToCart({
-        id: item.id,
-        name: item.name,
-        image: item.images[0],
+        id: item?.id ?? "",
+        name: item?.name ?? "",
+        image: item?.images[0] ?? "",
         quantity: 1,
-        price: item.price,
-        discount: item.discount,
-        sellerName: item.seller[0].name,
-        maxPrice: item.price + item.discount,
+        price: item?.price ?? 0,
+        discount: item?.discount ?? 0,
+        sellerName: item?.seller[0]?.name ?? "Unknown Seller",
+        maxPrice: mrp,
       })
     );
     navigate("/cart");

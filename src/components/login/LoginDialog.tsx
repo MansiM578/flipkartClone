@@ -4,7 +4,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  Stack,
   TextField,
   Typography,
   styled,
@@ -27,41 +26,41 @@ const LoginButton = styled(Button)`
   border-radius: 2px;
 `;
 
-const RequestOTP = styled(Button)`
-  text-transform: none;
-  background: #fff;
-  color: #2874f0;
-  height: 48px;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-`;
+// const RequestOTP = styled(Button)`
+//   text-transform: none;
+//   background: #fff;
+//   color: #2874f0;
+//   height: 48px;
+//   border-radius: 2px;
+//   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+// `;
 
 const Text = styled(Typography)`
   color: #878787;
   font-size: 12px;
 `;
 
-const CreateAccount = styled(Typography)`
-  margin: auto 0 5px 0;
-  text-align: center;
-  color: #2874f0;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-`;
+// const CreateAccount = styled(Typography)`
+//   margin: auto 0 5px 0;
+//   text-align: center;
+//   color: #2874f0;
+//   font-weight: 600;
+//   font-size: 14px;
+//   cursor: pointer;
+// `;
 
-const Wrappe = styled(Box)`
-  padding: 25px 35px;
-  display: flex;
-  flex: 1;
-  overflow: auto;
-  flex-direction: column;
-  & > div,
-  & > button,
-  & > p {
-    margin-top: 20px;
-  }
-`;
+// const Wrappe = styled(Box)`
+//   padding: 25px 35px;
+//   display: flex;
+//   flex: 1;
+//   overflow: auto;
+//   flex-direction: column;
+//   & > div,
+//   & > button,
+//   & > p {
+//     margin-top: 20px;
+//   }
+// `;
 const Wrapper = styled("form")`
   padding: 25px 35px;
   display: flex;
@@ -75,13 +74,13 @@ const Wrapper = styled("form")`
   }
 `;
 
-const Error = styled(Typography)`
-  font-size: 10px;
-  color: #ff6161;
-  line-height: 0;
-  margin-top: 10px;
-  font-weight: 600;
-`;
+// const Error = styled(Typography)`
+//   font-size: 10px;
+//   color: #ff6161;
+//   line-height: 0;
+//   margin-top: 10px;
+//   font-weight: 600;
+// `;
 
 const Image = styled(Box)`
   background: #2874f0
@@ -117,7 +116,12 @@ type FormValues = {
   confirmPassword: string;
 };
 
-const LoginDialog = ({ open, setOpen }: any) => {
+type props = {
+  open: boolean;
+  setOpen: (isOpen: boolean) => void;
+};
+
+const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
   const [account, toggleAccont] = useState(accountInitialValues.login);
 
   const handleClose = () => {
@@ -125,9 +129,9 @@ const LoginDialog = ({ open, setOpen }: any) => {
     toggleAccont(accountInitialValues.login);
   };
 
-  const toggleSignup = () => {
-    toggleAccont(accountInitialValues.signup);
-  };
+  // const toggleSignup = () => {
+  //   toggleAccont(accountInitialValues.signup);
+  // };
 
   const form = useForm<FormValues>({
     defaultValues: {

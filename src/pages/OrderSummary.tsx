@@ -2,7 +2,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "reducers/Store";
-import { CartItem } from "reducers/CartSlice";
+import { CartItem } from "types/types";
 
 const OrderSummary: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.orderItems);
