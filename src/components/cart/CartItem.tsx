@@ -1,17 +1,14 @@
 import { Box, Typography, Button, styled, ButtonGroup } from "@mui/material";
 import React from "react";
 import {
-  CartItem,
   decreaseQuantity,
   deleteFromCart,
   increaseQuantity,
 } from "reducers/CartSlice";
+
 import { addEllipsis } from "utils/common_utils";
 import { useDispatch } from "react-redux";
-
-type CartItemProps = {
-  cart: CartItem | null;
-};
+import { CartItemProps } from "types/types";
 
 const Component = styled(Box)`
   border-top: 1px solid #f0f0f0f0;
@@ -45,10 +42,10 @@ const StyledButton = styled(Button)`
   border-radius: 50%;
 `;
 
-const CartItems: React.FC<CartItemProps> = ({ cart }: any) => {
+const CartItems: React.FC<CartItemProps> = ({ cart }) => {
   const fassured =
     "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png";
-  const mrp = cart.price + cart.discount;
+  const mrp = (cart?.price || 0) + (cart?.discount || 0);
   const dispatch = useDispatch();
   const handleDeleteFromCart = (itemId: string) => {
     dispatch(deleteFromCart(itemId));
@@ -65,7 +62,7 @@ const CartItems: React.FC<CartItemProps> = ({ cart }: any) => {
     <Component>
       <LeftComponent>
         <img
-          src={cart.image}
+          src={cart?.image}
           alt="product"
           style={{ height: 110, width: 110 }}
         />
@@ -73,14 +70,14 @@ const CartItems: React.FC<CartItemProps> = ({ cart }: any) => {
           <StyledButton onClick={() => handleDecreaseQuantity(cart.id)}>
             -
           </StyledButton>
-          <Button>{cart.quantity}</Button>
+          <Button>{cart?.quantity}</Button>
           <StyledButton onClick={() => handleIncreaseQuantity(cart.id)}>
             +
           </StyledButton>
         </ButtonComponent>
       </LeftComponent>
       <Box sx={{ margin: "20px" }}>
-        <Typography> {addEllipsis(cart.name)}</Typography>
+        <Typography> {addEllipsis(cart?.name)}</Typography>
         <SmallText>
           Seller: {cart?.sellerName}
           <Box component="span">

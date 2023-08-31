@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "reducers/Store";
 import axios from "axios";
 
-export interface Item {
+export type Item = {
   id: string;
   assured: boolean;
   breadcrumbs: string[];
@@ -21,79 +21,79 @@ export interface Item {
   specifications: Specification;
   stock: number;
   // cart: CartItem[];
-}
+};
 
-export interface Offer {
+export type Offer = {
   offerType: string;
   description: string;
-}
+};
 
-export interface RatingReviews {
+export type RatingReviews = {
   avg_rating: number;
   rating: number;
   reviews: number;
-}
+};
 
-export interface Seller {
+export type Seller = {
   name: string;
   returns: boolean;
   rating: number;
-}
+};
 
-export interface Services {
+export type Services = {
   paymentType: string;
   warranty: string;
-}
+};
 
-export interface Specification {
+export type Specification = {
   attributes: SpecificationAttribute[];
-}
+};
 
-export interface SpecificationAttribute {
+export type SpecificationAttribute = {
   inTheBox: InTheBox;
   general: General;
   dimensions: Dimension;
   moreDetails: MoreDetails;
-}
+};
 
-export interface InTheBox {
+export type InTheBox = {
   salesPackage: string;
   packOf: string;
-}
+};
 
-export interface General {
+export type General = {
   brand: string;
   suitableFor: string;
   appliedOn: string;
   removable: string;
   color: string;
-}
+};
 
-export interface Dimension {
+export type Dimension = {
   height: string;
   width: string;
-}
+};
 
-export interface MoreDetails {
+export type MoreDetails = {
   GenericName: string;
   CountryOfOrigin: string;
-}
+};
 
-export interface CartItem {
+export type CartItem = {
   itemId: string;
   name: string;
   quantity: number;
   image: string;
-}
+};
 
-export interface ItemsState {
+export type ItemsState = {
   items: Item[] | null;
   loading: boolean;
   error: string | null;
   itemDetails: Item | null;
   cart: CartItem[] | null;
   // sellers: Seller[] | null;
-}
+};
 
 const initialState: ItemsState = {
   items: [],

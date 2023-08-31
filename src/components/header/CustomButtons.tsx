@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 import { Badge, Box, Button, Typography, styled } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
-import { red } from "@mui/material/colors";
-import { CartItem } from "reducers/CartSlice";
-import { RootState } from "reducers/Store";
-import { useSelector } from "react-redux";
 
 //components
 import LoginDialog from "components/login/LoginDialog";
-
-type CartItemProps = {
-  cart: CartItem | null;
-};
+import { CartProps } from "types/types";
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -40,9 +33,8 @@ const LoginButton = styled(Button)`
   height: 32px;
 `;
 
-const CustomButtons = ({ cartItems }: any) => {
+const CustomButtons: React.FC<CartProps> = ({ cartItems }) => {
   const [open, setOpen] = useState(false);
-
   const openDialog = () => {
     setOpen(true);
   };

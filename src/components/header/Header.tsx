@@ -1,11 +1,10 @@
 import React from "react";
-import { AppBar, Toolbar, Box, Typography, Badge, styled } from "@mui/material";
+import { AppBar, Toolbar, Box, Typography, styled } from "@mui/material";
 import Search from "./Search";
 import CustomButtons from "./CustomButtons";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "reducers/Store";
-import { CartItem } from "reducers/CartSlice";
 
 const StyledHeader = styled(AppBar)`
   background-color: #2874f0;

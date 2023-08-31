@@ -9,6 +9,7 @@ import {
   TableBody,
 } from "@mui/material";
 import { LocalOffer as Badge } from "@mui/icons-material";
+import { ActionItemProps } from "types/types";
 
 const SmallText = styled(Box)`
   font-size: 14px;
@@ -34,19 +35,19 @@ const ColumnText = styled(TableRow)`
   }
 `;
 
-const ProductDetail = ({ item }: any) => {
+const ProductDetail: React.FC<ActionItemProps> = ({ item }) => {
   const fassured =
     "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png";
   const adURL =
     "https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_2019-07-14.png?q=50";
   const date = new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000);
-  const mrp = item?.price + item?.discount;
+  const mrp = (item?.price || 0) + (item?.discount || 0);
 
   return (
     <>
       <Typography sx={{ fontSize: 20 }}>{item?.name ?? "-"}</Typography>
       <Typography sx={{ marginTop: 5, color: "#878787", fontSize: 14 }}>
-        {item?.ratingReviews?.rating} Rating & {item?.ratingReviews?.reviews}{" "}
+        {item?.ratingReview?.rating} Rating & {item?.ratingReview?.reviews}{" "}
         Reviews
         <Box component="span">
           <img src={fassured} alt="" style={{ width: 77, marginLeft: 20 }} />

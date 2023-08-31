@@ -1,6 +1,6 @@
 import { Box, Typography, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { CartItem } from "reducers/CartSlice";
+import { CartItem, CartProps } from "types/types";
 
 const Component = styled(Box)`
   background-color: #fff;
@@ -37,7 +37,7 @@ const Discount = styled(Typography)`
   font-weight: 550;
 `;
 
-const TotalView = ({ cartItems }: any) => {
+const TotalView: React.FC<CartProps> = ({ cartItems }) => {
   const [price, setPrice] = useState(0);
   const [discount, setDiscount] = useState(0);
 
