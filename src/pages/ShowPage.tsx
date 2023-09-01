@@ -64,9 +64,12 @@ const LeftComponent = styled(Grid)(({ theme }) => ({
   },
 }));
 
+const SideGrid = styled(Grid)`
+  width: 100%;
+`;
+
 const Cart: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
-  console.log(cartItems);
 
   // const dispatch = useDispatch();
   // const submitting = useSelector((state: RootState) => state.cart.loading);
@@ -98,6 +101,7 @@ const Cart: React.FC = () => {
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const [address, setAddress] = useState<string | null>(null);
+  const [data, setData] = useState<string | null>(null);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -109,24 +113,24 @@ const Cart: React.FC = () => {
           setLongitude(fetchedLongitude);
 
           const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${fetchedLatitude}&lon=${fetchedLongitude}`;
-          console.log(url);
+
           axios
             .get(url)
             .then((response) => {
-              console.log("API Response:", response.data);
-              console.log("Address:", response.data.display_name);
+              // console.log("API Response:", response.data);
+              // console.log("Address:", response.data.display_name);
               setAddress(response.data.display_name);
             })
-            .catch((error) => {
-              console.error("Error fetching city name:", error);
+            .catch(() => {
+              setData("Error fetching city name");
             });
         },
-        (error) => {
-          console.error("Error getting geolocation:", error);
+        () => {
+          setData("Error getting geolocation");
         }
       );
     } else {
-      console.error("Geolocation is not supported by this browser.");
+      setData("Geolocation is not supported by this browser.");
     }
   }, []);
 
@@ -134,14 +138,16 @@ const Cart: React.FC = () => {
     <>
       {cartItems.length ? (
         <Container container>
-          <LeftComponent item md={9} xs={12}>
-            <Header>Cart ({CartItems.length})</Header>
+          <LeftComponent item md={9} sm={12} xs={12}>
+            <Header>Cart ({cartItems.length})</Header>
             <Header2>
               <Button variant="contained" onClick={handleButtonClick}>
                 Get Location
               </Button>
-              {showData && latitude && longitude && (
+              {showData && latitude && longitude ? (
                 <AddressBar>{address}</AddressBar>
+              ) : (
+                <AddressBar>{data}</AddressBar>
               )}
             </Header2>
             {cartItems.map((item: CartItem) => (
@@ -151,9 +157,9 @@ const Cart: React.FC = () => {
               <StyledButton>Place Order</StyledButton>
             </ButtonWrapper>
           </LeftComponent>
-          <Grid item md={3} xs={12}>
+          <SideGrid item md={3} sm={12} xs={12}>
             <TotalView cartItems={cartItems} />
-          </Grid>
+          </SideGrid>
         </Container>
       ) : (
         <EmptyCart />

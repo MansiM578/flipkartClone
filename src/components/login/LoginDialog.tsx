@@ -116,6 +116,8 @@ type FormValues = {
   confirmPassword: string;
 };
 
+export let personName = "";
+
 type props = {
   open: boolean;
   setOpen: (isOpen: boolean) => void;
@@ -145,7 +147,11 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
   const { errors } = formState;
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
+    // console.log(data);
+    // console.log(data.username);
+    personName = data.username;
+    form.reset();
+    handleClose();
   };
 
   return (

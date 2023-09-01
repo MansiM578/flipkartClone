@@ -8,6 +8,7 @@ import { ActionItemProps } from "types/types";
 
 const LeftContainer = styled(Box)(({ theme }) => ({
   minWidth: "40%",
+  width: "auto",
   padding: "40px 0 0 80px",
   [theme.breakpoints.down("lg")]: {
     padding: "20px 40px",
@@ -16,6 +17,10 @@ const LeftContainer = styled(Box)(({ theme }) => ({
 
 const Image = styled("img")({
   padding: "15px",
+  maxWidth: "100%",
+  maxHeight: "100%",
+  width: "auto",
+  height: "auto",
 });
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -30,11 +35,20 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+const ImageBox = styled(Box)`
+  padding: "15px 20px";
+  border: "1px solid #f0f0f0";
+  width: 90%;
+  overflow: hidden;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+`;
+
 const ActionItem: React.FC<ActionItemProps> = ({ item }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const mrp: number = (item?.price || 0) + (item?.discount || 0);
-  console.log(mrp);
 
   const handleAddToCart = () => {
     dispatch(
@@ -54,15 +68,9 @@ const ActionItem: React.FC<ActionItemProps> = ({ item }) => {
 
   return (
     <LeftContainer>
-      <Box
-        style={{
-          padding: "15px20px",
-          border: "1px solid #f0f0f0",
-          width: "90%",
-        }}
-      >
+      <ImageBox>
         <Image src={item?.images[0]} alt="image1" />
-      </Box>
+      </ImageBox>
 
       <StyledButton
         variant="contained"
