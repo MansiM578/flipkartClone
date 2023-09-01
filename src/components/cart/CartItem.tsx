@@ -67,7 +67,10 @@ const CartItems: React.FC<CartItemProps> = ({ cart }) => {
           style={{ height: 110, width: 110 }}
         />
         <ButtonComponent>
-          <StyledButton onClick={() => handleDecreaseQuantity(cart.id)}>
+          <StyledButton
+            disabled={cart.quantity === 1}
+            onClick={() => handleDecreaseQuantity(cart.id)}
+          >
             -
           </StyledButton>
           <Button>{cart?.quantity}</Button>

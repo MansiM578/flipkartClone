@@ -64,10 +64,10 @@ const ProductDisplay: React.FC = () => {
   return (
     <Component>
       <Container container>
-        <Grid item md={4} sm={8} xs={12}>
+        <Grid item md={5} sm={12} xs={12}>
           <ActionItem item={item} />
         </Grid>
-        <RightContianer item sm={8} xs={12}>
+        <RightContianer item md={7} sm={12} xs={12}>
           <ProductDetail item={item} />
         </RightContianer>
       </Container>

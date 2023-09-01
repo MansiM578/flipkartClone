@@ -3,8 +3,9 @@ import { Badge, Box, Button, Typography, styled } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
 
 //components
-import LoginDialog from "components/login/LoginDialog";
+import LoginDialog, { personName } from "components/login/LoginDialog";
 import { CartProps } from "types/types";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -35,34 +36,46 @@ const LoginButton = styled(Button)`
 
 const CustomButtons: React.FC<CartProps> = ({ cartItems }) => {
   const [open, setOpen] = useState(false);
+
   const openDialog = () => {
     setOpen(true);
   };
 
   return (
     <Wrapper>
-      <LoginButton variant="contained" onClick={() => openDialog()}>
-        Login
-      </LoginButton>
-      <Typography style={{ marginTop: 3, width: 135 }}>
-        Become a Seller
-      </Typography>
-      <Typography style={{ marginTop: 3 }}>More</Typography>
+      {personName ? (
+        <Container>Logout</Container>
+      ) : (
+        <>
+          <LoginButton variant="contained" onClick={() => openDialog()}>
+            Login
+          </LoginButton>
+          <Typography style={{ marginTop: 3, width: 135 }}>
+            Become a Seller
+          </Typography>
+          <Typography style={{ marginTop: 3 }}>More</Typography>
 
-      <Container>
-        <Badge
-          color="error"
-          badgeContent={cartItems.length}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-        >
-          <ShoppingCart sx={{ fontSize: "20px", paddingRight: "3px" }} />
-          <Typography>Cart</Typography>
-        </Badge>
-      </Container>
-      <LoginDialog open={open} setOpen={setOpen} />
+          <Container>
+            <Link
+              to="/cart"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <Badge
+                color="error"
+                badgeContent={cartItems.length}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                <ShoppingCart sx={{ fontSize: "20px", paddingRight: "3px" }} />
+                <Typography>Cart</Typography>
+              </Badge>
+            </Link>
+          </Container>
+          <LoginDialog open={open} setOpen={setOpen} />
+        </>
+      )}
     </Wrapper>
   );
 };

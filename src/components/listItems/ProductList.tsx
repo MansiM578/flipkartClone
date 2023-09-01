@@ -41,6 +41,7 @@ const PhoneText = styled(Typography)`
 const Image = styled("img")({
   width: "auto",
   height: 150,
+  objectFit: "cover",
 });
 
 const Text = styled(Typography)`
@@ -52,6 +53,11 @@ const Model = styled(Box)`
   padding: "25px 15px";
   text-align: center;
   background-color: #ffffff;
+  overflow: hidden;
+  align-items: center;
+`;
+const Block = styled(Grid)`
+  height: "300px";
 `;
 
 const ProductList: React.FC = () => {
@@ -80,11 +86,11 @@ const ProductList: React.FC = () => {
       <ComponentBox>
         <Grid
           container
-          spacing={{ xs: 2, md: 3 }}
+          spacing={{ xs: 2, sm: 2, md: 3, lg: 3 }}
           columns={{ xs: 4, sm: 8, md: 12, lg: 12 }}
         >
           {items?.map((item) => (
-            <Grid item xs={2} sm={2} md={2} key={item.id}>
+            <Block item xs={2} sm={2} md={2} key={item.id}>
               <Link
                 to={`product/${item.id}`}
                 style={{ textDecoration: "none" }}
@@ -95,7 +101,7 @@ const ProductList: React.FC = () => {
                   <Text>{item.price}</Text>
                 </Model>
               </Link>
-            </Grid>
+            </Block>
           ))}
         </Grid>
       </ComponentBox>
