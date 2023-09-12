@@ -71,27 +71,6 @@ const SideGrid = styled(Grid)`
 const Cart: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
-  // const dispatch = useDispatch();
-  // const submitting = useSelector((state: RootState) => state.cart.loading);
-  // const handleSubmit = () => {
-  //   dispatch(fetchDataStart());
-  //   // Simulate an API call here
-  //   setTimeout(() => {
-  //     dispatch(fetchDataSuccess());
-  //     toast.success("Cart submitted successfully!");
-  //     dispatch(fetchDataClear()); // Clear the cart after successful submission
-  //   }, 1500);
-  // };
-  // const handleDeleteFromCart = (itemId: string) => {
-  //   dispatch(deleteFromCart(itemId));
-  // };
-  // const handleIncreaseQuantity = (itemId: string) => {
-  //   dispatch(increaseQuantity(itemId));
-  // };
-  // const handleDecreaseQuantity = (itemId: string) => {
-  //   dispatch(decreaseQuantity(itemId));
-  // };
-
   const [showData, setShowData] = useState(false);
 
   const handleButtonClick = () => {
@@ -117,8 +96,6 @@ const Cart: React.FC = () => {
           axios
             .get(url)
             .then((response) => {
-              // console.log("API Response:", response.data);
-              // console.log("Address:", response.data.display_name);
               setAddress(response.data.display_name);
             })
             .catch(() => {

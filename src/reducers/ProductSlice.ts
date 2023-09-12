@@ -13,12 +13,12 @@ export type Item = {
   name: string;
   offers: Offer[];
   price: number;
-  ratingReview: RatingReviews;
+  ratingReviews: RatingReviews;
   seller: Seller[];
-  services: Services;
+  services: Services[];
   slug: string;
   specialPrice: boolean;
-  specifications: Specification;
+  specifications: Specification[];
   stock: number;
   // cart: CartItem[];
 };

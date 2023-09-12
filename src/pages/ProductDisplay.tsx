@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { getProductDetails } from "reducers/ProductSlice";
 import ActionItem from "components/details/actionItem";
 import ProductDetail from "components/details/ProductDetail";
+import RecentSlide from "components/details/RecentSlide";
 
 const Component = styled(Box)`
   margin-top: 55px;
@@ -71,6 +72,8 @@ const ProductDisplay: React.FC = () => {
           <ProductDetail item={item} />
         </RightContianer>
       </Container>
+
+      <RecentSlide />
     </Component>
   );
 };

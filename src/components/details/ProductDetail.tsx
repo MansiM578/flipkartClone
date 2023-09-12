@@ -47,8 +47,8 @@ const ProductDetail: React.FC<ActionItemProps> = ({ item }) => {
     <>
       <Typography sx={{ fontSize: 20 }}>{item?.name ?? "-"}</Typography>
       <Typography sx={{ marginTop: 5, color: "#878787", fontSize: 14 }}>
-        {item?.ratingReview?.rating} Rating & {item?.ratingReview?.reviews}{" "}
-        Reviews
+        {item?.ratingReviews?.avg_rating} Rating &{" "}
+        {item?.ratingReviews?.reviews} Reviews
         <Box component="span">
           <img src={fassured} alt="" style={{ width: 77, marginLeft: 20 }} />
         </Box>

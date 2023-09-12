@@ -66,7 +66,6 @@ const cartSlice = createSlice({
     fetchDataSuccess: (state) => {
       state.loading = false;
       state.success = true;
-      // state.orderItems = action.payload;
       localStorage.setItem("ordercart", JSON.stringify(state));
     },
     fetchDataClear: (state) => {

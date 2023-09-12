@@ -3,9 +3,12 @@ import { Badge, Box, Button, Typography, styled } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
 
 //components
-import LoginDialog, { personName } from "components/login/LoginDialog";
+import LoginDialog from "components/login/LoginDialog";
 import { CartProps } from "types/types";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "reducers/Store";
+import { logout } from "reducers/UserSlice";
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -33,49 +36,83 @@ const LoginButton = styled(Button)`
   font-weight: 600;
   height: 32px;
 `;
+const LogoutButton = styled(Button)`
+  color: #2874f0;
+  background: #ffffff;
+  text-transform: none;
+  padding: 5px 40px;
+  margin-left: 5px;
+  border-radius: 2px;
+  box-shadow: none;
+  font-weight: 600;
+  height: 32px;
+`;
 
 const CustomButtons: React.FC<CartProps> = ({ cartItems }) => {
   const [open, setOpen] = useState(false);
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const userData = useSelector((state: RootState) => state.auth.userData);
+  const dispatch = useDispatch();
 
   const openDialog = () => {
     setOpen(true);
   };
 
+  const handleLogout = () => {
+    // Clear user data from local storage
+    localStorage.removeItem("userData");
+    console.log(userData);
+
+    // Dispatch the logout action to update the Redux state
+    dispatch(logout());
+  };
+
+  // function onAuthenticated(): void {
+  //   throw new Error("Function not implemented.");
+  // }
+
   return (
     <Wrapper>
-      {personName ? (
-        <Container>Logout</Container>
+      {isLoggedIn ? (
+        <LogoutButton variant="contained" onClick={handleLogout}>
+          Logout
+        </LogoutButton>
       ) : (
-        <>
-          <LoginButton variant="contained" onClick={() => openDialog()}>
-            Login
-          </LoginButton>
-          <Typography style={{ marginTop: 3, width: 135 }}>
-            Become a Seller
-          </Typography>
-          <Typography style={{ marginTop: 3 }}>More</Typography>
-
-          <Container>
-            <Link
-              to="/cart"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <Badge
-                color="error"
-                badgeContent={cartItems.length}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-              >
-                <ShoppingCart sx={{ fontSize: "20px", paddingRight: "3px" }} />
-                <Typography>Cart</Typography>
-              </Badge>
-            </Link>
-          </Container>
-          <LoginDialog open={open} setOpen={setOpen} />
-        </>
+        <LoginButton variant="contained" onClick={() => openDialog()}>
+          Login
+        </LoginButton>
       )}
+      <Typography style={{ marginTop: 3, width: 135 }}>
+        Become a Seller
+      </Typography>
+      <Typography style={{ marginTop: 3 }}>More</Typography>
+
+      {isLoggedIn ? (
+        <Container>
+          <Link to="/cart" style={{ textDecoration: "none", color: "inherit" }}>
+            <Badge
+              color="error"
+              badgeContent={cartItems.length}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              <ShoppingCart sx={{ fontSize: "20px", paddingRight: "3px" }} />
+              <Typography>Cart</Typography>
+            </Badge>
+          </Link>
+        </Container>
+      ) : (
+        <Link to="/cart" style={{ textDecoration: "none", color: "inherit" }}>
+          <Container sx={{ paddingTop: "3px", color: "inherit" }}>
+            <ShoppingCart sx={{ fontSize: "20px", paddingRight: "3px" }} />
+
+            <Typography>Cart</Typography>
+          </Container>
+        </Link>
+      )}
+      <LoginDialog open={open} setOpen={setOpen} />
     </Wrapper>
   );
 };

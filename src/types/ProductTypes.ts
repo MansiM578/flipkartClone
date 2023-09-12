@@ -9,7 +9,7 @@ export type Item = {
   name: string;
   offers: Offer[];
   price: number;
-  ratingReview: RatingReviews;
+  ratingReviews: RatingReviews;
   seller: Seller[];
   services: Services;
   slug: string;
