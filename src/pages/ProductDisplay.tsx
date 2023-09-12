@@ -17,14 +17,7 @@ const Component = styled(Box)`
   margin-top: 55px;
   background: #f2f2f2f2;
 `;
-// const Text = styled(Typography)`
-//   font-size: 14px;
-//   margin-top: 5px;
-// `;
-// const Image = styled("img")({
-//   width: "auto",
-//   height: 150,
-// });
+
 const Container = styled(Grid)(({ theme }) => ({
   background: "#FFFFFF",
   display: "flex",
@@ -46,8 +39,6 @@ const ProductDisplay: React.FC = () => {
   const item = useSelector(selectItemDetails);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
-
-  // const { id } = useParams();
 
   useEffect(() => {
     if (id) {

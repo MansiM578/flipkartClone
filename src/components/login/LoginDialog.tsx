@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { login } from "reducers/UserSlice";
 import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import { authentication } from "firebse";
+
 const Component = styled(DialogContent)`
   height: 70vh;
   width: 90vh;
@@ -31,40 +32,20 @@ const LoginButton = styled(Button)`
   border-radius: 2px;
 `;
 
-// const RequestOTP = styled(Button)`
-//   text-transform: none;
-//   background: #fff;
-//   color: #2874f0;
-//   height: 48px;
-//   border-radius: 2px;
-//   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-// `;
+const RequestOTP = styled(Button)`
+  text-transform: none;
+  background: #fff;
+  color: #2874f0;
+  height: 48px;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+`;
 
 const Text = styled(Typography)`
   color: #878787;
   font-size: 12px;
 `;
 
-// const CreateAccount = styled(Typography)`
-//   margin: auto 0 5px 0;
-//   text-align: center;
-//   color: #2874f0;
-//   font-weight: 600;
-//   font-size: 14px;
-//   cursor: pointer;
-// `;
-// const Wrappe = styled(Box)`
-//   padding: 25px 35px;
-//   display: flex;
-//   flex: 1;
-//   overflow: auto;
-//   flex-direction: column;
-//   & > div,
-//   & > button,
-//   & > p {
-//     margin-top: 20px;
-//   }
-// `;
 const Wrapper = styled("form")`
   padding: 25px 35px;
   display: flex;
@@ -111,11 +92,9 @@ type FormValues = {
   password: string;
   confirmPassword: string;
   phoneNumber: string;
-  // verify: string;
   otp: string;
+  username: string;
 };
-
-export let personName = "";
 
 type props = {
   open: boolean;
@@ -132,10 +111,6 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
     toggleAccont(accountInitialValues.login);
   };
 
-  // const toggleSignup = () => {
-  //   toggleAccont(accountInitialValues.signup);
-  // };
-
   const form = useForm<FormValues>({
     defaultValues: {
       username: "",
@@ -143,8 +118,8 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
       password: "",
       confirmPassword: "",
       phoneNumber: "",
-      // verify: "",
       otp: "",
+      username: "",
     },
   });
 
@@ -180,8 +155,8 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
           window.confirmationResult = confirmationResult;
         })
         .catch((error) => {
-          //Error:SMS not sent
-
+          alert("Request OTP Error");
+          alert(error);
           console.log(error);
         });
     }
@@ -194,74 +169,33 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
       const confirmationResult = window.confirmationResult;
       confirmationResult
         .confirm(otp)
-        .then(() => {
-          //USer signed in successfully
-          // const user = result.user;
+        .then((result) => {
+          const user = result.user;
+          localStorage.setItem("userName", JSON.stringify(user));
 
           dispatch(login);
+          console.log("userName");
           form.reset();
+          setShowPhoneAuth(false);
+          setPhoneNumber("");
           handleClose();
         })
         .catch((error) => {
-          console.log(error);
+          alert("Verify Error");
+          alert(error);
         });
     }
   };
 
-  // const handleSendCode = async () => {
-  // const recaptchaVerifier = new RecaptchaVerifier(
-  //   auth,
-  //   "recaptcha-container",
-  //   {
-  //     size: "normal",
-  //   }
-  // );
-  // const recaptchaVerifier = new RecaptchaVerifier(
-  //   auth,
-  //   "recaptcha-container",
-  //   {
-  //     size: "invisible",
-  //   }
-  // );
-  // try {
-  //   const confirmation = await signInWithPhoneNumber(
-  //     auth,
-  //     phoneNumber,
-  //     recaptchaVerifier
-  //   );
-  //   setConfirmationResult(confirmation);
-  // } catch (error) {
-  //   console.error(error);
-  // }
-  // };
-  // const handleVerifyCode = async () => {
-  //   try {
-  //     await confirmationResult.confirm(verificationCode);
-  //     // Code verified successfully, you can proceed with user login or other actions.
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     setPhoneNumber(data.phoneNumber);
     setOTP(data.otp);
-    // setVerificationCode(data.verify);
-    if (showPhoneAuth) {
-      // console.log(data.phoneNumber);
-      console.log(data);
-      // confirmationResult(true);
-      // handleSendCode();
-    } else {
-      // console.log(data);
-      // console.log(data.username);
-      localStorage.setItem("userData", JSON.stringify(data));
-      dispatch(login(data));
-      personName = data.username;
-      console.log(data);
-      form.reset();
-      handleClose();
-    }
+
+    localStorage.setItem("userData", JSON.stringify(data));
+    dispatch(login(data));
+
+    form.reset();
+    handleClose();
   };
 
   const handleLoginWithPhoneNumber = () => {
@@ -282,20 +216,16 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
               {account.subHeading}
             </Typography>
           </Image>
-          <Wrapper
-            onSubmit={showPhoneAuth ? requestOTP : handleSubmit(onSubmit)}
-            noValidate
-          >
-            {showPhoneAuth ? (
-              <>
+
+          {showPhoneAuth ? (
+            <>
+              <form onSubmit={requestOTP} noValidate>
                 <TextField
                   variant="standard"
                   label="Phone Number"
                   type="tel"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  // error={!!errors.phoneNumber}
-                  // helperText={errors.phoneNumber?.message}
                 />
 
                 {expandForm ? (
@@ -307,14 +237,21 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
                     onChange={verifyOTP}
                   />
                 ) : (
-                  <Button type="submit" variant="outlined">
+                  <RequestOTP type="submit" variant="outlined">
                     Request OTP
-                  </Button>
+                  </RequestOTP>
                 )}
                 <div id="recaptcha-container"></div>
-              </>
-            ) : (
-              <>
+                <Text>
+                  by continuing, you agree to Flipkart&#39;s Terms of Use and
+                  Privacy Policy
+                </Text>
+                <LoginButton type="submit">Login</LoginButton>
+              </form>
+            </>
+          ) : (
+            <>
+              <Wrapper onSubmit={handleSubmit(onSubmit)} noValidate>
                 <TextField
                   variant="standard"
                   label="Username"
@@ -362,43 +299,24 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
                   error={!!errors.confirmPassword}
                   helperText={errors.confirmPassword?.message}
                 />
-              </>
-            )}
-            <Text>
-              by continuing, you agree to Flipkart&#39;s Terms of Use and
-              Privacy Policy
-            </Text>
-            <LoginButton type="submit">Login</LoginButton>
-            OR
-            <Button
-              onClick={handleLoginWithPhoneNumber}
-              variant="contained"
-              color="primary"
-            >
-              Login with Phone Number
-            </Button>
-          </Wrapper>
+                <Text>
+                  by continuing, you agree to Flipkart&#39;s Terms of Use and
+                  Privacy Policy
+                </Text>
+                <LoginButton type="submit">Login</LoginButton>
+                OR
+                <Button
+                  onClick={handleLoginWithPhoneNumber}
+                  variant="contained"
+                  color="primary"
+                >
+                  Login with Phone Number
+                </Button>
+              </Wrapper>
+            </>
+          )}
+
           <DevTool control={control} />
-          {/* {account.view === "login" ? (
-            <Wrapper>
-              <TextField variant="standard" label="Enter username" />
-              <TextField variant="standard" label="Enter email" />
-              <TextField variant="standard" label="Enter password" />
-              <TextField variant="standard" label="Confirm password" />
-              <Text>
-                by continuing, you agree to Flipkart&#39;s Terms of Use and
-                Privacy Policy
-              </Text>
-              <LoginButton>Login</LoginButton>
-              <CreateAccount onClick={() => toggleSignup()}>
-                New to Flipkart? Create an Account
-              </CreateAccount>
-            </Wrapper>
-          ) : (
-            <Wrapper>
-              <TextField variant="standard" label="Enter name" />
-            </Wrapper>
-          )} */}
         </Box>
       </Component>
     </Dialog>

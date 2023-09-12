@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Badge, Box, Button, Typography, styled } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
 
-//components
 import LoginDialog from "components/login/LoginDialog";
 import { CartProps } from "types/types";
 import { Link } from "react-router-dom";
@@ -59,17 +58,11 @@ const CustomButtons: React.FC<CartProps> = ({ cartItems }) => {
   };
 
   const handleLogout = () => {
-    // Clear user data from local storage
     localStorage.removeItem("userData");
     console.log(userData);
 
-    // Dispatch the logout action to update the Redux state
     dispatch(logout());
   };
-
-  // function onAuthenticated(): void {
-  //   throw new Error("Function not implemented.");
-  // }
 
   return (
     <Wrapper>

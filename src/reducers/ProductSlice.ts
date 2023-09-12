@@ -101,7 +101,6 @@ const initialState: ItemsState = {
   error: null,
   itemDetails: null,
   cart: [],
-  // sellers: [],
 };
 
 export const fetchItems = createAsyncThunk<Item[]>(

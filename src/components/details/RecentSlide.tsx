@@ -72,15 +72,6 @@ const RecentSlide: React.FC = () => {
               <Text sx={{ color: "#212121", opacity: ".6" }}>tagline</Text>
             </Box>
           ))}
-          {/* <Box textAlign="center" sx={{ padding: "25px 15px" }}>
-            <Image
-              src="https://th.bing.com/th/id/OIG.lVXjWwlHyIo4QdjnC1YE"
-              alt="image1"
-            />
-            <Text sx={{ fontWeight: 600, color: "#212121" }}>Name</Text>
-            <Text sx={{ color: "green" }}>discount</Text>
-            <Text sx={{ color: "#212121", opacity: ".6" }}>tagline</Text>
-          </Box> */}
         </Carousel>
       </Component>
     </>

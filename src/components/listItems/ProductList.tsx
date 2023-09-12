@@ -18,8 +18,6 @@ import {
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "reducers/Store";
 import { addRecentItem } from "reducers/RecentItemsSlice";
-// import { addRecentItem } from "reducers/RecentItemsSlice";
-// import { Item } from "types/ProductTypes";
 
 const ComponentBox = styled(Box)`
   display: flex;
@@ -34,7 +32,6 @@ const Component = styled(Box)`
 
 const Phone = styled(Box)`
   margin: 15px 20px;
-
   display: flex;
   background: #f1f1f1f1;
 `;
@@ -42,13 +39,11 @@ const Phone = styled(Box)`
 const PhoneText = styled(Typography)`
   font-size: 22px;
   margin-right: 25px;
+  margin-top: 15px;
   line-height: 32px;
 `;
 
 const Image = styled("img")({
-  // width: "auto",
-  // height: 150,
-  // objectFit: "cover",
   height: "280px",
   padding: " 0 auto 25px",
   position: "relative",
@@ -87,12 +82,6 @@ const Assured = styled("img")({
   margin: "0 0 0 8px",
   width: "77px",
 });
-
-// const Text = styled(Typography)`
-//   font-size: 14px;
-//   margin-top: 5px;
-//   text-decoration: none;
-// `;
 
 const Model = styled(Box)`
   padding: 25px 15px;
@@ -179,7 +168,6 @@ const ProductList: React.FC = () => {
                     <RateBox>
                       <ProductRating>
                         {item?.ratingReviews?.avg_rating} ★
-                        {/* <Rating></Rating> */}
                       </ProductRating>
                       <Review component="span">
                         ({item?.ratingReviews?.rating})

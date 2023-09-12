@@ -1,12 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 const firebaseConfig = {
-  apiKey: "AIzaSyBGvBkDBO-dsvWqkeU28fP3mjTxSXCB8t4",
-  authDomain: "flipkartclone-396906.firebaseapp.com",
-  projectId: "flipkartclone-396906",
-  storageBucket: "flipkartclone-396906.appspot.com",
-  messagingSenderId: "768292126378",
-  appId: "1:768292126378:web:73828e090a932e43e69ad3",
+  apiKey: "AIzaSyAE7VHd7GLr81lYQBftOwrLL7J_mk3B5mw",
+  authDomain: "flipkart--clone.firebaseapp.com",
+  projectId: "flipkart--clone",
+  storageBucket: "flipkart--clone.appspot.com",
+  messagingSenderId: "613771533123",
+  appId: "1:613771533123:web:33c17b92c29834eddfadf6",
 };
 
 // Initialize Firebase

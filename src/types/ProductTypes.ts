@@ -16,7 +16,6 @@ export type Item = {
   specialPrice: boolean;
   specifications: Specification;
   stock: number;
-  // cart: CartItem[];
 };
 
 export type Offer = {
@@ -88,5 +87,4 @@ export type ItemsState = {
   error: string | null;
   itemDetails: Item | null;
   cart: CartItem[] | null;
-  // sellers: Seller[] | null;
 };
