@@ -10,6 +10,16 @@ export type CartItem = {
   maxPrice: number;
   sellerName: string;
 };
+export type RecentItem = {
+  id: string;
+  name: string;
+  image: string;
+  quantity: number;
+  price: number;
+  discount: number;
+  maxPrice: number;
+  sellerName: string;
+};
 
 export type OrderItem = {
   id: string;
@@ -36,3 +46,13 @@ export type CartItemProps = {
 export type ActionItemProps = {
   item: Item | null;
 };
+export type ViewItemProps = {
+  viewItems: RecentItem | null;
+};
+
+declare global {
+  interface Window {
+    recaptchaVerifier: string;
+    confirmationResult: string;
+  }
+}

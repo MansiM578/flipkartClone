@@ -3,16 +3,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "reducers/Store";
 import { CartItem } from "types/types";
 import { Box, Button, Grid, styled } from "@mui/material";
-// import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CartItems from "components/cart/CartItem";
 import TotalView from "components/cart/TotalView";
 import EmptyCart from "components/cart/EmptyCart";
 import axios from "axios";
-
-// const Image = styled("img")({
-//   padding: "15px",
-// });
 
 const Container = styled(Grid)(({ theme }) => ({
   padding: "30px 135px",
@@ -71,27 +66,6 @@ const SideGrid = styled(Grid)`
 const Cart: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
-  // const dispatch = useDispatch();
-  // const submitting = useSelector((state: RootState) => state.cart.loading);
-  // const handleSubmit = () => {
-  //   dispatch(fetchDataStart());
-  //   // Simulate an API call here
-  //   setTimeout(() => {
-  //     dispatch(fetchDataSuccess());
-  //     toast.success("Cart submitted successfully!");
-  //     dispatch(fetchDataClear()); // Clear the cart after successful submission
-  //   }, 1500);
-  // };
-  // const handleDeleteFromCart = (itemId: string) => {
-  //   dispatch(deleteFromCart(itemId));
-  // };
-  // const handleIncreaseQuantity = (itemId: string) => {
-  //   dispatch(increaseQuantity(itemId));
-  // };
-  // const handleDecreaseQuantity = (itemId: string) => {
-  //   dispatch(decreaseQuantity(itemId));
-  // };
-
   const [showData, setShowData] = useState(false);
 
   const handleButtonClick = () => {
@@ -117,8 +91,6 @@ const Cart: React.FC = () => {
           axios
             .get(url)
             .then((response) => {
-              // console.log("API Response:", response.data);
-              // console.log("Address:", response.data.display_name);
               setAddress(response.data.display_name);
             })
             .catch(() => {
@@ -169,41 +141,3 @@ const Cart: React.FC = () => {
 };
 
 export default Cart;
-
-// <div>
-// <h2>Cart Items</h2>
-// <ul>
-//   {cartItems.map((item: CartItem) => (
-//     <div key={item.id}>
-//       <Image src={item.image} alt="image1" />
-//       <p>{item.name}</p>
-//       <p>Quantity: {item.quantity}</p>
-//       <p>Price: ${item.price}</p>
-
-//       <Button
-//         variant="contained"
-//         onClick={() => handleIncreaseQuantity(item.id)}
-//       >
-//         +
-//       </Button>
-//       <Button
-//         variant="contained"
-//         onClick={() => handleDecreaseQuantity(item.id)}
-//       >
-//         -
-//       </Button>
-//       <Button
-//         variant="contained"
-//         onClick={() => handleDeleteFromCart(item.id)}
-//       >
-//         Delete
-//       </Button>
-
-//       <Button onClick={handleSubmit} disabled={submitting}>
-//         {submitting ? "Submitting..." : "Submit"}
-//       </Button>
-//     </div>
-//     ))}
-//   </ul>
-//   <ToastContainer />
-// </div>

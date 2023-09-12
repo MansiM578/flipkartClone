@@ -11,19 +11,13 @@ import { useParams } from "react-router-dom";
 import { getProductDetails } from "reducers/ProductSlice";
 import ActionItem from "components/details/actionItem";
 import ProductDetail from "components/details/ProductDetail";
+import RecentSlide from "components/details/RecentSlide";
 
 const Component = styled(Box)`
   margin-top: 55px;
   background: #f2f2f2f2;
 `;
-// const Text = styled(Typography)`
-//   font-size: 14px;
-//   margin-top: 5px;
-// `;
-// const Image = styled("img")({
-//   width: "auto",
-//   height: 150,
-// });
+
 const Container = styled(Grid)(({ theme }) => ({
   background: "#FFFFFF",
   display: "flex",
@@ -45,8 +39,6 @@ const ProductDisplay: React.FC = () => {
   const item = useSelector(selectItemDetails);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
-
-  // const { id } = useParams();
 
   useEffect(() => {
     if (id) {
@@ -71,6 +63,8 @@ const ProductDisplay: React.FC = () => {
           <ProductDetail item={item} />
         </RightContianer>
       </Container>
+
+      <RecentSlide />
     </Component>
   );
 };
