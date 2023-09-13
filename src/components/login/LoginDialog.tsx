@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import {
   Box,
   Button,
@@ -144,7 +144,7 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
     );
   };
 
-  const requestOTP = (e: any) => {
+  const requestOTP = (e: SyntheticEvent) => {
     e.preventDefault();
     if (phoneNumber.length >= 12) {
       setExpandForm(true);
@@ -162,7 +162,7 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
     }
   };
 
-  const verifyOTP = (e: any) => {
+  const verifyOTP = (e: SyntheticEvent) => {
     const otp = e.target.value;
     setOTP(otp);
     if (otp.length === 6) {
@@ -173,9 +173,9 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
           const user = result.user;
           localStorage.setItem("userName", JSON.stringify(user));
 
-          dispatch(login);
+          dispatch(login(user));
           console.log("userName");
-          form.reset();
+          // form.reset();
           setShowPhoneAuth(false);
           setPhoneNumber("");
           handleClose();
