@@ -9,7 +9,7 @@ import { useAppDispatch } from "reducers/Store";
 import { Box, Typography, CircularProgress, Grid, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { getProductDetails } from "reducers/ProductSlice";
-import ActionItem from "components/details/actionItem";
+import ActionItem from "components/details/ActionItem/actionItem";
 import ProductDetail from "components/details/ProductDetail";
 import RecentSlide from "components/details/RecentSlide";
 

@@ -1,6 +1,7 @@
 import { Box, Typography, styled } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { CartItem, CartProps } from "types/types";
+import React from "react";
+import { CartProps } from "types/types";
+import useTotalView from "components/cart/TotalView/useTotalView";
 
 const Component = styled(Box)`
   background-color: #fff;
@@ -38,23 +39,7 @@ const Discount = styled(Typography)`
 `;
 
 const TotalView: React.FC<CartProps> = ({ cartItems }) => {
-  const [price, setPrice] = useState(0);
-  const [discount, setDiscount] = useState(0);
-
-  useEffect(() => {
-    totalAmount();
-  }, [cartItems]);
-
-  const totalAmount = () => {
-    let price = 0,
-      discount = 0;
-    cartItems.map((item: CartItem) => {
-      price += item.maxPrice * item.quantity;
-      discount += (item.maxPrice - item.price) * item.quantity;
-    });
-    setPrice(price);
-    setDiscount(discount);
-  };
+  const { price, discount } = useTotalView({ cartItems });
 
   return (
     <Component>

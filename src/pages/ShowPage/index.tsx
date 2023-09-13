@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "reducers/Store";
 import { CartItem } from "types/types";
@@ -7,7 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import CartItems from "components/cart/CartItem";
 import TotalView from "components/cart/TotalView";
 import EmptyCart from "components/cart/EmptyCart";
-import axios from "axios";
+
+import useShowPage from "./useShowPage";
 
 const Container = styled(Grid)(({ theme }) => ({
   padding: "30px 135px",
@@ -66,45 +67,8 @@ const SideGrid = styled(Grid)`
 const Cart: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
-  const [showData, setShowData] = useState(false);
-
-  const handleButtonClick = () => {
-    setShowData(true);
-  };
-
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
-  const [address, setAddress] = useState<string | null>(null);
-  const [data, setData] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const fetchedLatitude = position.coords.latitude;
-          const fetchedLongitude = position.coords.longitude;
-          setLatitude(fetchedLatitude);
-          setLongitude(fetchedLongitude);
-
-          const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${fetchedLatitude}&lon=${fetchedLongitude}`;
-
-          axios
-            .get(url)
-            .then((response) => {
-              setAddress(response.data.display_name);
-            })
-            .catch(() => {
-              setData("Error fetching city name");
-            });
-        },
-        () => {
-          setData("Error getting geolocation");
-        }
-      );
-    } else {
-      setData("Geolocation is not supported by this browser.");
-    }
-  }, []);
+  const { showData, handleButtonClick, latitude, longitude, address, data } =
+    useShowPage();
 
   return (
     <>

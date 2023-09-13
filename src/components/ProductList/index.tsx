@@ -1,12 +1,5 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import {
-  fetchItems,
-  selectItems,
-  selectLoading,
-  selectError,
-  selectItemDetails,
-} from "reducers/ProductSlice";
+import React from "react";
+
 import {
   Box,
   Typography,
@@ -16,8 +9,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "reducers/Store";
-import { addRecentItem } from "reducers/RecentItemsSlice";
+import useProductList from "components/ProductList/useProductList";
 
 const ComponentBox = styled(Box)`
   display: flex;
@@ -105,33 +97,7 @@ const Review = styled(Box)`
 `;
 
 const ProductList: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const items = useSelector(selectItems);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-  const item = useSelector(selectItemDetails);
-
-  const mrp: number = (item?.price || 0) + (item?.discount || 0);
-
-  console.log(items);
-  useEffect(() => {
-    dispatch(fetchItems());
-  }, [dispatch]);
-
-  const handleProductView = () => {
-    dispatch(
-      addRecentItem({
-        id: item?.id ?? "",
-        name: item?.name ?? "",
-        image: item?.images[0] ?? "",
-        quantity: 1,
-        price: item?.price ?? 0,
-        discount: item?.discount ?? 0,
-        sellerName: item?.seller[0]?.name ?? "Unknown Seller",
-        maxPrice: mrp,
-      })
-    );
-  };
+  const { items, loading, error, handleProductView } = useProductList();
 
   if (loading) {
     return <CircularProgress />;

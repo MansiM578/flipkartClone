@@ -1,14 +1,8 @@
 import { Box, Typography, Button, styled, ButtonGroup } from "@mui/material";
 import React from "react";
-import {
-  decreaseQuantity,
-  deleteFromCart,
-  increaseQuantity,
-} from "reducers/CartSlice";
-
 import { addEllipsis } from "utils/common_utils";
-import { useDispatch } from "react-redux";
 import { CartItemProps } from "types/types";
+import useCartItem from "components/cart/CartItem/useCartItem";
 
 const Component = styled(Box)`
   border-top: 1px solid #f0f0f0f0;
@@ -43,21 +37,13 @@ const StyledButton = styled(Button)`
 `;
 
 const CartItems: React.FC<CartItemProps> = ({ cart }) => {
-  const fassured =
-    "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png";
-  const mrp = (cart?.price || 0) + (cart?.discount || 0);
-  const dispatch = useDispatch();
-  const handleDeleteFromCart = (itemId: string) => {
-    dispatch(deleteFromCart(itemId));
-  };
-
-  const handleIncreaseQuantity = (itemId: string) => {
-    dispatch(increaseQuantity(itemId));
-  };
-
-  const handleDecreaseQuantity = (itemId: string) => {
-    dispatch(decreaseQuantity(itemId));
-  };
+  const {
+    fassured,
+    mrp,
+    handleDeleteFromCart,
+    handleIncreaseQuantity,
+    handleDecreaseQuantity,
+  } = useCartItem({ cart });
   return (
     <Component>
       <LeftComponent>
