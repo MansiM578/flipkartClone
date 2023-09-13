@@ -1,10 +1,9 @@
 import { Box, Button, styled } from "@mui/material";
 import React from "react";
 import { ShoppingCart as Cart, FlashOn as Flash } from "@mui/icons-material";
-import { addItemToCart } from "reducers/CartSlice";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+
 import { ActionItemProps } from "types/types";
+import useActionItem from "components/details/ActionItem/useActionItem";
 
 const LeftContainer = styled(Box)(({ theme }) => ({
   minWidth: "40%",
@@ -46,25 +45,7 @@ const ImageBox = styled(Box)`
 `;
 
 const ActionItem: React.FC<ActionItemProps> = ({ item }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const mrp: number = (item?.price || 0) + (item?.discount || 0);
-
-  const handleAddToCart = () => {
-    dispatch(
-      addItemToCart({
-        id: item?.id ?? "",
-        name: item?.name ?? "",
-        image: item?.images[0] ?? "",
-        quantity: 1,
-        price: item?.price ?? 0,
-        discount: item?.discount ?? 0,
-        sellerName: item?.seller[0]?.name ?? "Unknown Seller",
-        maxPrice: mrp,
-      })
-    );
-    navigate("/cart");
-  };
+  const { handleAddToCart } = useActionItem({ item });
 
   return (
     <LeftContainer>

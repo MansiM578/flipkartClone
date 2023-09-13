@@ -1,6 +1,7 @@
 import { Box, Typography, styled } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { CartItem, CartProps } from "types/types";
+import React from "react";
+import { CartProps } from "types/types";
+import useTotalView from "components/cart/TotalView/useTotalView";
 
 const Component = styled(Box)`
   background-color: #fff;
@@ -38,24 +39,9 @@ const Discount = styled(Typography)`
 `;
 
 const TotalView: React.FC<CartProps> = ({ cartItems }) => {
-  const [price, setPrice] = useState(0);
-  const [discount, setDiscount] = useState(0);
-
-  useEffect(() => {
-    totalAmount();
-  }, [cartItems]);
-
-  const totalAmount = () => {
-    let price = 0,
-      discount = 0;
-    cartItems.map((item: CartItem) => {
-      price += item.maxPrice * item.quantity;
-      discount += (item.maxPrice - item.price) * item.quantity;
-    });
-    setPrice(price);
-    setDiscount(discount);
-  };
-
+  const { price, discount } = useTotalView({ cartItems });
+  const len = cartItems?.length;
+  const view = cartItems.length > 1 ? `Items` : `Item`;
   return (
     <Component>
       <Header>
@@ -63,22 +49,16 @@ const TotalView: React.FC<CartProps> = ({ cartItems }) => {
       </Header>
       <Container>
         <Typography>
-          Price ({cartItems?.length} {cartItems.length > 1 ? `Items` : `Item`})
-          <Price component="span">₹{price}</Price>
+          Price ({len} {view})<Price component="span">₹{price}</Price>
         </Typography>
         <Typography>
-          Discount ({cartItems?.length}{" "}
-          {cartItems.length > 1 ? `Items` : `Item`})
-          <Price component="span">₹{discount}</Price>
+          Discount ({len} {view})<Price component="span">₹{discount}</Price>
         </Typography>
         <Typography>
-          Delivery Charges ({cartItems?.length}{" "}
-          {cartItems.length > 1 ? `Items` : `Item`})
-          <Price component="span">₹40</Price>
+          Delivery Charges ({len} {view})<Price component="span">₹40</Price>
         </Typography>
         <Typography variant="h6">
-          Total Amount ({cartItems?.length}{" "}
-          {cartItems.length > 1 ? `Items` : `Item`})
+          Total Amount ({len} {view})
           <Price component="span">₹{price - discount + 40}</Price>
         </Typography>
         <Discount>You will save ₹{discount - 40} on this order</Discount>

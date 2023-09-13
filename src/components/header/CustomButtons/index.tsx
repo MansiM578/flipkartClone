@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Badge, Box, Button, Typography, styled } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
-
-import LoginDialog from "components/login/LoginDialog";
+import LoginDialog from "components/LoginDialog";
 import { CartProps } from "types/types";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "reducers/Store";
-import { logout } from "reducers/UserSlice";
+import useCustomButtons from "components/header/CustomButtons/useCustomButtons";
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -48,21 +45,8 @@ const LogoutButton = styled(Button)`
 `;
 
 const CustomButtons: React.FC<CartProps> = ({ cartItems }) => {
-  const [open, setOpen] = useState(false);
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const userData = useSelector((state: RootState) => state.auth.userData);
-  const dispatch = useDispatch();
-
-  const openDialog = () => {
-    setOpen(true);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("userData");
-    console.log(userData);
-
-    dispatch(logout());
-  };
+  const { open, setOpen, isLoggedIn, openDialog, handleLogout } =
+    useCustomButtons();
 
   return (
     <Wrapper>

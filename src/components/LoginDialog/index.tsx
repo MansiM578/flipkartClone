@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import React, { SyntheticEvent, useState } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -10,12 +8,8 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import { useDispatch } from "react-redux";
-import { login } from "reducers/UserSlice";
-import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
-import { authentication } from "firebse";
+import useLoginDialog from "components/LoginDialog/useLoginDialog";
 
 const Component = styled(DialogContent)`
   height: 70vh;
@@ -73,134 +67,30 @@ const Image = styled(Box)`
   }
 `;
 
-const accountInitialValues = {
-  login: {
-    view: "login",
-    heading: "Login",
-    subHeading: "Get access to your Orders, Wishlist and Recommendations",
-  },
-  signup: {
-    view: "signup",
-    heading: "Looks like you're new here",
-    subHeading: "Signup to get started",
-  },
-};
-
-type FormValues = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  phoneNumber: string;
-  otp: string;
-  username: string;
-};
-
 type props = {
   open: boolean;
   setOpen: (isOpen: boolean) => void;
 };
 
 const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
-  const [account, toggleAccont] = useState(accountInitialValues.login);
-  const dispatch = useDispatch();
-  const [showPhoneAuth, setShowPhoneAuth] = useState(false);
-
-  const handleClose = () => {
-    setOpen(false);
-    toggleAccont(accountInitialValues.login);
-  };
-
-  const form = useForm<FormValues>({
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      phoneNumber: "",
-      otp: "",
-      username: "",
-    },
-  });
-
-  const { register, handleSubmit, formState, control, watch } = form;
-  const { errors } = formState;
-
-  const countryCode = "+91";
-  const [phoneNumber, setPhoneNumber] = useState(countryCode);
-  const [expandForm, setExpandForm] = useState(false);
-  const [OTP, setOTP] = useState("");
-
-  const generateRecaptcha = () => {
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
-      {
-        // size: "invisible",
-        callback: () => {
-          //reCaptcha solved
-        },
-      },
-      authentication
-    );
-  };
-
-  const requestOTP = (e: SyntheticEvent) => {
-    e.preventDefault();
-    if (phoneNumber.length >= 12) {
-      setExpandForm(true);
-      generateRecaptcha();
-      const appVerifier = window.recaptchaVerifier;
-      signInWithPhoneNumber(authentication, phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-          window.confirmationResult = confirmationResult;
-        })
-        .catch((error) => {
-          alert("Request OTP Error");
-          alert(error);
-          console.log(error);
-        });
-    }
-  };
-
-  const verifyOTP = (e: SyntheticEvent) => {
-    const otp = e.target.value;
-    setOTP(otp);
-    if (otp.length === 6) {
-      const confirmationResult = window.confirmationResult;
-      confirmationResult
-        .confirm(otp)
-        .then((result) => {
-          const user = result.user;
-          localStorage.setItem("userName", JSON.stringify(user));
-
-          dispatch(login(user));
-          console.log("userName");
-          // form.reset();
-          setShowPhoneAuth(false);
-          setPhoneNumber("");
-          handleClose();
-        })
-        .catch((error) => {
-          alert("Verify Error");
-          alert(error);
-        });
-    }
-  };
-
-  const onSubmit = async (data: FormValues) => {
-    setPhoneNumber(data.phoneNumber);
-    setOTP(data.otp);
-
-    localStorage.setItem("userData", JSON.stringify(data));
-    dispatch(login(data));
-
-    form.reset();
-    handleClose();
-  };
-
-  const handleLoginWithPhoneNumber = () => {
-    setShowPhoneAuth(true);
-  };
+  const {
+    account,
+    showPhoneAuth,
+    handleClose,
+    register,
+    handleSubmit,
+    control,
+    watch,
+    errors,
+    phoneNumber,
+    setPhoneNumber,
+    expandForm,
+    otp,
+    requestOTP,
+    verifyOTP,
+    onSubmit,
+    handleLoginWithPhoneNumber,
+  } = useLoginDialog({ open, setOpen });
 
   return (
     <Dialog
@@ -233,7 +123,7 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
                     label="OTP Input"
                     variant="outlined"
                     fullWidth
-                    value={OTP}
+                    value={otp}
                     onChange={verifyOTP}
                   />
                 ) : (
