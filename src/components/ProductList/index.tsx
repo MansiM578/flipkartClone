@@ -117,12 +117,12 @@ const ProductList: React.FC = () => {
         <ComponentBox>
           <Grid
             container
-            spacing={{ xs: 2, sm: 2, md: 3, lg: 3 }}
+            spacing={{ xs: 2, md: 3, lg: 3 }}
             columns={{ xs: 4, sm: 8, md: 12, lg: 12 }}
             sx={{ background: "#ffffff" }}
           >
             {items?.map((item) => (
-              <Block item xs={2} sm={2} md={3} key={item.id}>
+              <Block item xs={2} md={3} key={item.id}>
                 <Link
                   to={`product/${item.id}`}
                   onClick={handleProductView}

@@ -40,7 +40,8 @@ const Discount = styled(Typography)`
 
 const TotalView: React.FC<CartProps> = ({ cartItems }) => {
   const { price, discount } = useTotalView({ cartItems });
-
+  const len = cartItems?.length;
+  const view = cartItems.length > 1 ? `Items` : `Item`;
   return (
     <Component>
       <Header>
@@ -48,22 +49,16 @@ const TotalView: React.FC<CartProps> = ({ cartItems }) => {
       </Header>
       <Container>
         <Typography>
-          Price ({cartItems?.length} {cartItems.length > 1 ? `Items` : `Item`})
-          <Price component="span">₹{price}</Price>
+          Price ({len} {view})<Price component="span">₹{price}</Price>
         </Typography>
         <Typography>
-          Discount ({cartItems?.length}{" "}
-          {cartItems.length > 1 ? `Items` : `Item`})
-          <Price component="span">₹{discount}</Price>
+          Discount ({len} {view})<Price component="span">₹{discount}</Price>
         </Typography>
         <Typography>
-          Delivery Charges ({cartItems?.length}{" "}
-          {cartItems.length > 1 ? `Items` : `Item`})
-          <Price component="span">₹40</Price>
+          Delivery Charges ({len} {view})<Price component="span">₹40</Price>
         </Typography>
         <Typography variant="h6">
-          Total Amount ({cartItems?.length}{" "}
-          {cartItems.length > 1 ? `Items` : `Item`})
+          Total Amount ({len} {view})
           <Price component="span">₹{price - discount + 40}</Price>
         </Typography>
         <Discount>You will save ₹{discount - 40} on this order</Discount>

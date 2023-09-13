@@ -85,7 +85,7 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
     phoneNumber,
     setPhoneNumber,
     expandForm,
-    OTP,
+    otp,
     requestOTP,
     verifyOTP,
     onSubmit,
@@ -123,7 +123,7 @@ const LoginDialog: React.FC<props> = ({ open, setOpen }) => {
                     label="OTP Input"
                     variant="outlined"
                     fullWidth
-                    value={OTP}
+                    value={otp}
                     onChange={verifyOTP}
                   />
                 ) : (

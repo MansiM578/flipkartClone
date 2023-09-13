@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { login } from "reducers/UserSlice";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { authentication } from "firebse";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const accountInitialValues = {
   login: {
@@ -61,13 +63,12 @@ function useLoginDialog({ setOpen }: props) {
   const countryCode = "+91";
   const [phoneNumber, setPhoneNumber] = useState(countryCode);
   const [expandForm, setExpandForm] = useState(false);
-  const [OTP, setOTP] = useState("");
+  const [otp, setOTP] = useState("");
 
   const generateRecaptcha = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
       "recaptcha-container",
       {
-        // size: "invisible",
         callback: () => {
           //reCaptcha solved
         },
@@ -87,9 +88,9 @@ function useLoginDialog({ setOpen }: props) {
           window.confirmationResult = confirmationResult;
         })
         .catch((error) => {
-          alert("Request OTP Error");
-          alert(error);
-          console.log(error);
+          toast("Request OTP Error");
+          toast(error);
+          console.error;
         });
     }
   };
@@ -106,15 +107,14 @@ function useLoginDialog({ setOpen }: props) {
           localStorage.setItem("userName", JSON.stringify(user));
 
           dispatch(login(user));
-          console.log("userName");
           form.reset();
           setPhoneNumber("");
           setShowPhoneAuth(false);
           handleClose();
         })
         .catch((error) => {
-          alert("Verify Error");
-          alert(error);
+          toast("Verify Error");
+          toast(error);
         });
     }
   };
@@ -146,7 +146,7 @@ function useLoginDialog({ setOpen }: props) {
     phoneNumber,
     setPhoneNumber,
     expandForm,
-    OTP,
+    otp,
     requestOTP,
     verifyOTP,
     onSubmit,

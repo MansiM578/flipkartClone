@@ -70,37 +70,33 @@ const Cart: React.FC = () => {
   const { showData, handleButtonClick, latitude, longitude, address, data } =
     useShowPage();
 
+  if (!cartItems.length) {
+    return <EmptyCart />;
+  }
+
   return (
-    <>
-      {cartItems.length ? (
-        <Container container>
-          <LeftComponent item md={9} sm={12} xs={12}>
-            <Header>Cart ({cartItems.length})</Header>
-            <Header2>
-              <Button variant="contained" onClick={handleButtonClick}>
-                Get Location
-              </Button>
-              {showData && latitude && longitude ? (
-                <AddressBar>{address}</AddressBar>
-              ) : (
-                <AddressBar>{data}</AddressBar>
-              )}
-            </Header2>
-            {cartItems.map((item: CartItem) => (
-              <CartItems key={item.id} cart={item} />
-            ))}
-            <ButtonWrapper>
-              <StyledButton>Place Order</StyledButton>
-            </ButtonWrapper>
-          </LeftComponent>
-          <SideGrid item md={3} sm={12} xs={12}>
-            <TotalView cartItems={cartItems} />
-          </SideGrid>
-        </Container>
-      ) : (
-        <EmptyCart />
-      )}
-    </>
+    <Container container>
+      <LeftComponent item md={9} xs={12}>
+        <Header>Cart ({cartItems.length})</Header>
+        <Header2>
+          <Button variant="contained" onClick={handleButtonClick}>
+            Get Location
+          </Button>
+          <AddressBar>
+            {showData && latitude && longitude ? address : data}
+          </AddressBar>
+        </Header2>
+        {cartItems.map((item: CartItem) => (
+          <CartItems key={item.id} cart={item} />
+        ))}
+        <ButtonWrapper>
+          <StyledButton>Place Order</StyledButton>
+        </ButtonWrapper>
+      </LeftComponent>
+      <SideGrid item md={3} sm={12} xs={12}>
+        <TotalView cartItems={cartItems} />
+      </SideGrid>
+    </Container>
   );
 };
 
